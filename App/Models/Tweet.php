@@ -45,7 +45,14 @@ class Tweet extends Model{
             `tweets` AS t
             LEFT JOIN usuarios AS u ON (t.id_usuario = u.id)
         WHERE
-            t.id_usuario = :id_usuario
+            t.id_usuario = :id_usuario OR t.id_usuario IN (
+                SELECT
+                    id_usuario_seguindo
+                FROM
+                    usuarios_seguidores
+                WHERE
+                    id_usuario = :id_usuario
+            )
         ORDER BY
             t.data DESC
         ";
