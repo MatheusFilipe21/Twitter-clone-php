@@ -55,7 +55,7 @@ class Tweet extends Model{
         return $this;
     }
 
-    public function getAll(){
+    public function getPorPagina($limit, $offset){
         $query = "
         SELECT
             t.id, t.id_usuario, u.nome, t.tweet, DATE_FORMAT(t.data, '%d/%m/%Y %H:%i') as data
@@ -73,6 +73,10 @@ class Tweet extends Model{
             )
         ORDER BY
             t.data DESC
+        LIMIT
+            $limit
+        OFFSET
+            $offset
         ";
 
         $stmt = $this->db->prepare($query);
