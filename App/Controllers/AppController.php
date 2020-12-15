@@ -34,6 +34,18 @@ class AppController extends Action{
         header('Location: /timeline');
     }
 
+    public function removerTweet(){
+        $this->validateAuth();
+        
+        $tweet = Container::getModel('tweet');
+        
+        $tweet->__set('id', $_GET['id_tweet']);
+
+        $tweet->remove();
+
+        header('Location: /timeline');
+    }
+
     public function quemSeguir(){
         $this->validateAuth();
 
