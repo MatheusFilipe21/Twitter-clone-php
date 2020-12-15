@@ -34,6 +34,25 @@ class AppController extends Action{
         header('Location: /timeline');
     }
 
+    public function quemSeguir(){
+        $this->validateAuth();
+
+        $pesquisa = isset($_GET['pesquisa']) ? $_GET['pesquisa'] : '';
+
+        $usuarios = array();
+
+        if($pesquisa != ''){
+            $usuario = Container::getModel('Usuario');
+            $usuario->__set('nome', $pesquisa);
+            $usuario->__set('id', $_SESSION['id']);
+            $usuarios = $usuario->getAll();
+        }
+
+        $this->view->usuarios = $usuarios;
+        
+        $this->render('quemSeguir');
+    }
+
     public function validateAuth(){
         session_start();
         
